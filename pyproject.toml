@@ -1,0 +1,14 @@
+[project]
+name = "video_frame_viewer"
+version = "1.0.0"
+requires-python = ">= 3.7"
+dependencies = [
+    "numpy",
+    "opencv-python",
+    "pillow"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["*"]
+exclude = [""]
