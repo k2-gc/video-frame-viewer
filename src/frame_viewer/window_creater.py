@@ -48,7 +48,10 @@ class View(tk.Frame):
         self.canvas.create_image(0, 0, image=image, anchor=tk.NW)
     
     def resize_window_size(self, image_width, image_height):
-        if image_width < 650:
+        if image_width > 1500:
+            image_width = image_width / 2
+            image_height = image_height / 2
+        elif image_width < 650:
             r = 650 / image_width
             image_width = image_width*r
             image_height = image_height*r

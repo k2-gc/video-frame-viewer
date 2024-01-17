@@ -44,6 +44,3 @@ App window is like this and single video frame will be displayed on the gray are
 |Press 'S' key | Save current frame |
 |Press 'Down Arrow' key | Save current frame |
 |Push 'Save' button | Save current frame |
-
-## Issue
-* FHD Video might not be displayed correctly.
