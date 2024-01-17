@@ -25,7 +25,7 @@ run_app(VIDEO_PATH)
 ```
 
 ### App Description
-After starting an app, the app window will be appeared.  
+After starting an app, the app window will appear.  
 ![App Screen](./img/app_image.png)
 
 App window is like this and single video frame will be displayed on the gray area in above image.
