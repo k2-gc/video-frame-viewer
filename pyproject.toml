@@ -1,7 +1,7 @@
 [project]
 name = "video_frame_viewer"
 version = "1.0.0"
-requires-python = ">= 3.7"
+requires-python = ">= 3.8"
 dependencies = [
     "numpy",
     "opencv-python",

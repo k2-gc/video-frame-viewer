@@ -5,10 +5,10 @@ This tool allows you to input video file and display single frame on window. Als
 
 
 ## Prerequisites
-* Python>=3.7
+* Python>=3.8
 
 ## How to Install
-After installing Python>=3.7, please run command below in your venv.
+After installing Python>=3.8, please run command below in your venv.
 ```bash
 pip install -U pip setuptools build
 python -m build
