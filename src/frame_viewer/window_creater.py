@@ -40,6 +40,9 @@ class View(tk.Frame):
         # For display image
         self.image_obj = None
     
+    def __del__(self):
+        self.logger.info("View object deleting...")
+    
     def update_image(self, image):
         del self.image_obj
         image = image.resize((self.image_width, self.imaeg_height))

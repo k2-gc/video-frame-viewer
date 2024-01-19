@@ -30,6 +30,9 @@ class Controller:
 
         # Display first frame
         self._update_image()
+    
+    def __del__(self):
+        self.logger.info("Controller object deleting...")
 
     def update_frame(self, is_next=True):
         self.model.update_frame_index(is_next=is_next)
@@ -50,7 +53,6 @@ class Controller:
             self.model.save_frame()
             return
         elif event.keysym in self.quit_key:
-            self.logger.info("App quitting...")
             self.root.destroy()
             self.root.quit()
         else:

@@ -10,4 +10,4 @@ def run_app(video_path):
     root = tk.Tk()
     app = Controller(root, video_path)
     root.mainloop()
-    logger.info("App done!")
+    logger.info("App stopped!")

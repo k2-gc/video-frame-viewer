@@ -1,4 +1,6 @@
+import os
 from pathlib import Path
+import shutil
 import tkinter as tk
 
 import cv2
@@ -11,11 +13,12 @@ class Model:
         self.logger = get_logger()
         self.logger.info("Init Model class")
         self.val = tk.IntVar(value=0)
+        self.tmp_video_path = "tmp" + Path(video_path).suffix
         self._check_video_file_validation(video_path=video_path)
 
-        self.cap = cv2.VideoCapture(video_path)
+        self.cap = cv2.VideoCapture(self.tmp_video_path)
         self.video_frame_num = self._get_frame_num()
-        self.logger.info(f"Checking '{video_path} ...")
+        self.logger.info(f"Checking '{video_path}' ...")
         self.show_info()
 
         # tkinter variables setting
@@ -27,12 +30,19 @@ class Model:
         self.logger.info(f"Output directory '{self.out_dir}' creating...")
         self.out_dir.mkdir(exist_ok=True, parents=True)
     
+    def __del__(self):
+        os.remove(self.tmp_video_path)
+        self.logger.info(f"'{self.tmp_video_path}' deleting...")
+        self.logger.info("Model object deleting...")
+    
     def _check_video_file_validation(self, video_path):
         if not Path(video_path).exists():
             self.logger.critical(f"Video path '{video_path}' not found.")
             self.logger.info("App stopped")
             exit()
-        cap = cv2.VideoCapture(video_path)
+        self.logger.info(f"'{video_path}' copying to 'tmp.mp4'")
+        shutil.copy2(video_path, self.tmp_video_path)
+        cap = cv2.VideoCapture(self.tmp_video_path)
         if not cap.isOpened():
             self.logger.critical(f"Video path '{video_path}' load failed.")
             self.logger.info("App stopped")
@@ -95,9 +105,10 @@ class Model:
             self.logger.warning(f"Reading '{current_frame_index}' failed")
             return None
         self.logger.info(f"Saving! frame index: '{current_frame_index}'")
+        cv2.imwrite("tmp.png", image)
         out_name = f"frame_{str(current_frame_index).zfill(6)}.png"
         out_path = self.out_dir / out_name
-        cv2.imwrite(str(out_path), image)
+        shutil.move("tmp.png", out_path)
     
     def get_image_size(self):
         width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
