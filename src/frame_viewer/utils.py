@@ -1,6 +1,9 @@
 import logging
 
 def get_logger():
+    """Get logger.
+    Get same name logger and set format and so on.
+    """
     logger = logging.getLogger("logger")
     if logger.hasHandlers():
         return logger

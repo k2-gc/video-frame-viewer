@@ -9,6 +9,13 @@ from PIL import Image
 from .utils import get_logger
 
 class Model:
+    """Manage frame position, load and svae a frame.
+    Hold opencv VideoCapture object, frame num, current frame index and so on.
+    This class corresponds to 'Model' in MVC design.
+
+    Args: 
+        video_path (str): video_path to be loaded
+    """
     def __init__(self, video_path):
         self.logger = get_logger()
         self.logger.info("Init Model class")
@@ -37,6 +44,12 @@ class Model:
         self.logger.info("Model object deleting...")
     
     def _check_video_file_validation(self, video_path):
+        """Check video file existence.
+        If exists, copy video file to 'tmp.mp4'.
+
+        Args:
+            video_path (str): Video path to be checked.
+        """
         if not Path(video_path).exists():
             self.logger.critical(f"Video path '{video_path}' not found.")
             self.logger.info("App stopped")
@@ -50,6 +63,9 @@ class Model:
             exit()
     
     def show_info(self):
+        """Show video info.
+        Show frame num in video, frame rate of video, width and height of frame.
+        """
         self.logger.info("******************")
         self.logger.info(f"Frame num: '{self.video_frame_num}'")
         self.logger.info(f"Frame rate: '{self.cap.get(cv2.CAP_PROP_FPS)}'")
@@ -58,7 +74,10 @@ class Model:
         self.logger.info("******************")
 
     def _get_frame_num(self):
-        """Count the number of frames in video instead of 'cap.get(cv2.CAP_PROP_FRAME_COUNT)'
+        """Count the number of frames of video instead of 'cap.get(cv2.CAP_PROP_FRAME_COUNT)'.
+
+        Returns:
+            frame_count: Total frame num
         """
         frame_count = 0
         while True:
@@ -69,6 +88,12 @@ class Model:
         return frame_count
 
     def show_frame(self):
+        """Get current frame.
+        Read current frame from cap and return Image object.
+
+        Returns: 
+            image: Image object
+        """
         current_frame_index = self.currnet_frame_index.get()
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame_index) 
         ret, image = self.cap.read()
@@ -82,6 +107,13 @@ class Model:
         
     
     def update_frame_index(self, is_next: bool = True):
+        """Update frame index
+        Get int number that is input on app and calculate current frame index.
+
+        Args:
+            is_next (bool): If true, add input number to 'self.current_frame_index'.
+                            Otherwise, substract.
+        """
         try:
             skip_frame_num = self.skip_frame_num.get()
         except:
@@ -99,6 +131,9 @@ class Model:
             self.currnet_frame_index.set(next_frame_index)
     
     def save_frame(self):
+        """Save current frame
+        First, save frame named 'tmp.png' and rename it 'frame_FRAME-INDEX.png'.
+        """
         current_frame_index = self.currnet_frame_index.get()
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, current_frame_index) 
         ret, image = self.cap.read()
@@ -112,6 +147,12 @@ class Model:
         shutil.move("tmp.png", out_path)
     
     def get_image_size(self):
+        """Get frame width and height.
+        
+        Returns:
+            width: Frame width.
+            height: Frame height.
+        """
         width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         return width, height

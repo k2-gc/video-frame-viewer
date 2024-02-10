@@ -5,6 +5,12 @@ from PIL import ImageTk
 from .utils import get_logger
 
 class View(tk.Frame):
+    """Manage app screen.
+
+    Args:
+        parent (tkinter.Tk): tkinter.Tk object
+        image_size (tuple): (width, height)
+    """
     def __init__(self, parent, image_size):
         super().__init__(parent)
         self.parent = parent
@@ -44,6 +50,8 @@ class View(tk.Frame):
         self.logger.info("View object deleting...")
     
     def update_image(self, image):
+        """Update displayed frame on app screen.
+        """
         del self.image_obj
         image = image.resize((self.image_width, self.imaeg_height))
         image = ImageTk.PhotoImage(image)
@@ -51,6 +59,18 @@ class View(tk.Frame):
         self.canvas.create_image(0, 0, image=image, anchor=tk.NW)
     
     def resize_window_size(self, image_width, image_height):
+        """Resize app screen size if need.
+        If frame width>1500, resize to half.
+        If frame width<650, resize to 650 and keep aspect ratio.
+
+        Args:
+            image_width (int | float): Frame width.
+            image_height (int | float): Frame height.
+        
+        Returns:
+            image_width: Frame width.
+            image_width: Frame height.
+        """
         if image_width > 1500:
             image_width = image_width / 2
             image_height = image_height / 2
