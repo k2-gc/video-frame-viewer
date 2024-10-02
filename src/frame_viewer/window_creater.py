@@ -71,7 +71,10 @@ class View(tk.Frame):
             image_width: Frame width.
             image_width: Frame height.
         """
-        if image_width > 1500:
+        if image_width > 4000:
+            image_width = image_width / 4
+            image_height = image_height / 4
+        elif image_width > 1500:
             image_width = image_width / 2
             image_height = image_height / 2
         elif image_width < 650:
