@@ -16,21 +16,24 @@ class Model:
     Args: 
         video_path (str): video_path to be loaded
     """
-    def __init__(self, video_path):
+    def __init__(self):
         self.logger = get_logger()
         self.logger.info("Init Model class")
         self.val = tk.IntVar(value=0)
+
+        # tkinter variables setting
+        self.currnet_frame_index = tk.IntVar(value=0)
+        self.skip_frame_num = tk.IntVar(value=1)
+    
+    def _set_video_info(self, video_path):
         self.tmp_video_path = "tmp" + Path(video_path).suffix
+        shutil.copyfile(video_path, self.tmp_video_path)
         self._check_video_file_validation(video_path=video_path)
 
         self.cap = cv2.VideoCapture(self.tmp_video_path)
         self.video_frame_num = self._get_frame_num()
         self.logger.info(f"Checking '{video_path}' ...")
         self.show_info()
-
-        # tkinter variables setting
-        self.currnet_frame_index = tk.IntVar(value=0)
-        self.skip_frame_num = tk.IntVar(value=1)
 
         # Prepare output dir
         self.out_dir = Path(Path(video_path).stem)
