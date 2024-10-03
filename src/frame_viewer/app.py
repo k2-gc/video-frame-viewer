@@ -4,7 +4,7 @@ from .app_controller import Controller
 from .utils import get_logger
 
 
-def run_app(video_path):
+def run_app(video_path=None):
     """Run app.
 
     Args:

@@ -5,10 +5,13 @@ requires-python = ">= 3.8"
 dependencies = [
     "numpy",
     "opencv-python",
-    "pillow"
+    "pillow",
+    "fire",
 ]
 
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["*"]
 exclude = [""]
+[project.scripts]
+frame-save = "frame_viewer.cli:app"
