@@ -17,11 +17,17 @@ pip install dist/video_frame_viewer-1.0.0-py3-none-any.whl
 
 ## Usage
 ### App Run
+#### CLI
+```bash
+frame-save run
+```
+
+#### Code
 [Sample code](./sample.py) is available.
 ```python
 from frame_viewer.app import run_app
 
-run_app(VIDEO_PATH)
+run_app()
 ```
 
 ### App Description
