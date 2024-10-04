@@ -74,7 +74,7 @@ class Controller:
             return
         self.logger.info(f"Video path: {file_path}")
         if os.path.exists(file_path):
-            self.model._set_video_info(file_path)
+            self.model.set_video_info(file_path)
             width, height = self.model.get_image_size()
             self.view.create_window(image_width=width, image_height=height)
             self._bind_func()

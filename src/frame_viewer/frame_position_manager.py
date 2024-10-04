@@ -19,13 +19,15 @@ class Model:
     def __init__(self):
         self.logger = get_logger()
         self.logger.info("Init Model class")
+        self.cap = None
+        self.tmp_video_path = None
         self.val = tk.IntVar(value=0)
 
         # tkinter variables setting
         self.currnet_frame_index = tk.IntVar(value=0)
         self.skip_frame_num = tk.IntVar(value=1)
     
-    def _set_video_info(self, video_path):
+    def set_video_info(self, video_path):
         self.tmp_video_path = "tmp" + Path(video_path).suffix
         shutil.copyfile(video_path, self.tmp_video_path)
         self._check_video_file_validation(video_path=video_path)
@@ -41,9 +43,11 @@ class Model:
         self.out_dir.mkdir(exist_ok=True, parents=True)
     
     def __del__(self):
-        del self.cap
-        os.remove(self.tmp_video_path)
-        self.logger.info(f"'{self.tmp_video_path}' deleting...")
+        if not self.cap is None:
+            del self.cap
+        if not self.tmp_video_path is None:
+            self.logger.info(f"'{self.tmp_video_path}' deleting...")
+            os.remove(self.tmp_video_path)
         self.logger.info("Model object deleting...")
     
     def _check_video_file_validation(self, video_path):
